@@ -1,0 +1,75 @@
+{"frames": [
+
+{
+	"filename": "bcoc_kish.png",
+	"frame": {"x":0,"y":0,"w":465,"h":938},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":465,"h":938},
+	"sourceSize": {"w":465,"h":938},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "boss_kish.png",
+	"frame": {"x":465,"y":0,"w":465,"h":938},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":465,"h":938},
+	"sourceSize": {"w":465,"h":938},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "coc_kish.png",
+	"frame": {"x":930,"y":0,"w":465,"h":938},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":465,"h":938},
+	"sourceSize": {"w":465,"h":938},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "fly_kish.png",
+	"frame": {"x":1395,"y":0,"w":465,"h":938},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":465,"h":938},
+	"sourceSize": {"w":465,"h":938},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "larva_kish.png",
+	"frame": {"x":0,"y":938,"w":465,"h":938},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":465,"h":938},
+	"sourceSize": {"w":465,"h":938},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "spidy_kish.png",
+	"frame": {"x":465,"y":938,"w":465,"h":938},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":465,"h":938},
+	"sourceSize": {"w":465,"h":938},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "wasp_kish.png",
+	"frame": {"x":930,"y":938,"w":465,"h":938},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":465,"h":938},
+	"sourceSize": {"w":465,"h":938},
+	"pivot": {"x":0.5,"y":0.5}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "weapon_g_finger_2.png",
+	"format": "RGBA8888",
+	"size": {"w":1860,"h":1876},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:42252c0cad6c3662cdb2aa0b106aeee8:e537a7362a06776e72789badc4ce4022:1e5948d707331cd6930e0ac8deba244e$"
+}
+}

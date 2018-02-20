@@ -1,0 +1,48 @@
+{"frames": [
+
+{
+	"filename": "base.png",
+	"frame": {"x":0,"y":0,"w":308,"h":701},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":308,"h":701},
+	"sourceSize": {"w":308,"h":701},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "dad_en.png",
+	"frame": {"x":308,"y":0,"w":308,"h":701},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":308,"h":701},
+	"sourceSize": {"w":308,"h":701},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "dad_ru.png",
+	"frame": {"x":616,"y":0,"w":308,"h":701},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":308,"h":701},
+	"sourceSize": {"w":308,"h":701},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "web.png",
+	"frame": {"x":924,"y":0,"w":308,"h":701},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":308,"h":701},
+	"sourceSize": {"w":308,"h":701},
+	"pivot": {"x":0.5,"y":0.5}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "weapon_slipper.png",
+	"format": "RGBA8888",
+	"size": {"w":1232,"h":701},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:1a32b82bb357f5085f9806f24909658b:8dba04b8da870b61b22ba272d8bfb3e7:4d8ec457e677491dd38207cd228eb389$"
+}
+}

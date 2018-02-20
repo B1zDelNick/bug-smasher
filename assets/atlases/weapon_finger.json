@@ -1,0 +1,52 @@
+{"frames": [
+
+{
+	"filename": "base.png",
+	"frame": {"x":0,"y":0,"w":479,"h":950},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":479,"h":950},
+	"sourceSize": {"w":479,"h":950}
+},
+{
+	"filename": "ouch_1.png",
+	"frame": {"x":479,"y":0,"w":479,"h":950},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":479,"h":950},
+	"sourceSize": {"w":479,"h":950}
+},
+{
+	"filename": "ouch_2.png",
+	"frame": {"x":958,"y":0,"w":479,"h":950},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":479,"h":950},
+	"sourceSize": {"w":479,"h":950}
+},
+{
+	"filename": "spot.png",
+	"frame": {"x":0,"y":950,"w":479,"h":950},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":479,"h":950},
+	"sourceSize": {"w":479,"h":950}
+},
+{
+	"filename": "web.png",
+	"frame": {"x":479,"y":950,"w":479,"h":950},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":479,"h":950},
+	"sourceSize": {"w":479,"h":950}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "weapon_finger.png",
+	"format": "RGBA8888",
+	"size": {"w":1437,"h":1900},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:5b8ccdb9a91f58f409f405f5a93f1439:ea6f7be9bc0c3bb9dbc5f610107b57d9:5d761610a266b07c89600d0c30723ffd$"
+}
+}

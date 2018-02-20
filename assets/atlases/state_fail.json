@@ -1,0 +1,39 @@
+{"frames": [
+
+{
+	"filename": "bug.png",
+	"frame": {"x":0,"y":0,"w":369,"h":376},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":369,"h":376},
+	"sourceSize": {"w":369,"h":376},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "label_en.png",
+	"frame": {"x":0,"y":376,"w":499,"h":143},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":499,"h":143},
+	"sourceSize": {"w":499,"h":143},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "label_ru.png",
+	"frame": {"x":0,"y":519,"w":499,"h":143},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":499,"h":143},
+	"sourceSize": {"w":499,"h":143},
+	"pivot": {"x":0.5,"y":0.5}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "state_fail.png",
+	"format": "RGBA8888",
+	"size": {"w":499,"h":662},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:f7e1642b70f63ade0c827c0bac96fe7f:3a06f5a5bdef98385663c9b5e165ec71:ab88f08827878aed7293e1bfcc497531$"
+}
+}

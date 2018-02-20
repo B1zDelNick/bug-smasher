@@ -1,0 +1,68 @@
+{"frames": [
+
+{
+	"filename": "bcoc_kish.png",
+	"frame": {"x":0,"y":0,"w":479,"h":950},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":479,"h":950},
+	"sourceSize": {"w":479,"h":950}
+},
+{
+	"filename": "boss_kish.png",
+	"frame": {"x":479,"y":0,"w":479,"h":950},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":479,"h":950},
+	"sourceSize": {"w":479,"h":950}
+},
+{
+	"filename": "coc_kish.png",
+	"frame": {"x":958,"y":0,"w":479,"h":950},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":479,"h":950},
+	"sourceSize": {"w":479,"h":950}
+},
+{
+	"filename": "fly_kish.png",
+	"frame": {"x":1437,"y":0,"w":479,"h":950},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":479,"h":950},
+	"sourceSize": {"w":479,"h":950}
+},
+{
+	"filename": "larva_kish.png",
+	"frame": {"x":0,"y":950,"w":479,"h":950},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":479,"h":950},
+	"sourceSize": {"w":479,"h":950}
+},
+{
+	"filename": "spidy_kish.png",
+	"frame": {"x":479,"y":950,"w":479,"h":950},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":479,"h":950},
+	"sourceSize": {"w":479,"h":950}
+},
+{
+	"filename": "wasp_kish.png",
+	"frame": {"x":958,"y":950,"w":479,"h":950},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":479,"h":950},
+	"sourceSize": {"w":479,"h":950}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "weapon_finger_2.png",
+	"format": "RGBA8888",
+	"size": {"w":1916,"h":1900},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:81357bdcf083605c22c6a07780a54a82:1e88b8c930af4947da16b607e95c48de:f7da7bcc3628de47771572f22b7c179c$"
+}
+}
