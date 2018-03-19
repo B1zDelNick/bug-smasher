@@ -8,6 +8,9 @@ export class LevelData {
         public doubleSpawn: number, // %
         public tripleSpawn: number, // %
         public foodCount: number,
-        public mobs: MobData[]) {
+        public presentChance: number,
+        public presentMax: number,
+        public mobs: MobData[],
+        public boss: MobData = null) {
     }
 }

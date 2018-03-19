@@ -2,12 +2,15 @@ import {GameConfig, MonsterType} from '../../../../config/game.config';
 import {ImageUtils} from '../../../../utils/images/image.utils';
 import {TweenUtils} from '../../../../utils/tween.utils';
 import {Mob} from '../mobs/mob';
+import {SoundUtils} from '../../../../utils/sound/sound.utils';
+import {Boss} from '../mobs/boss';
 
 export class GFinger {
 
     private game: Phaser.Game = null;
     private container: Phaser.Group = null;
     private kishContainer: Phaser.Group = null;
+    public smashPoint: Phaser.Point = new Phaser.Point();
     private base: Phaser.Sprite = null;
     private ouch1: Phaser.Sprite = null;
     private ouch2: Phaser.Sprite = null;
@@ -58,7 +61,7 @@ export class GFinger {
     public update() {
         if (this.spiderBited) {
             this.spiderBiteTimer++;
-            if (this.spiderBiteTimer >= 60 * 5) {
+            if (this.spiderBiteTimer >= 30 * 5) {
                 this.spiderBited = false;
                 this.spiderBiteTimer = 0;
                 TweenUtils.fadeOut(this.web, 250);
@@ -66,33 +69,45 @@ export class GFinger {
         }
     }
 
-    public smash(mob: Mob, callback: Function, context: any): boolean {
+    public smash(point: Phaser.Point, callback: Function, context: any): boolean {
         if (this.animating) {
             return false;
         }
         this.animating = true;
+        this.smashPoint = point;
         TweenUtils.kill(this.container);
         TweenUtils.kill(this.container.scale);
-        TweenUtils.delayedCall(200 * this.getMultiplier(), callback, context);
-        TweenUtils.moveAndRotate(this.container, mob.getX(), mob.getY() + 25 * this.getMultiplier(), 0, 210 * this.getMultiplier(), 0, () => {
-            this.addKish(mob.getType());
-            TweenUtils.scale(this.container, .95, 150 * this.getMultiplier(), 0, true, () => {
-                if (mob.getType() === MonsterType.WASP) { // % TODO
-                    this.addWaspBite();
-                }
-                else if (mob.getType() === MonsterType.SPIDER && !this.spiderBited) { // SPIDY TODO
-                    this.spiderBited = true;
-                    this.animating = false;
-                    TweenUtils.fadeIn(this.web, 250);
-                }
-                else {
-                    this.animating = false;
-                }
-                TweenUtils.delayedCall(20 * this.getMultiplier(), this.toHoldPosition, this);
-            }, this);
-            /*TweenUtils.delayedCall(320 * this.getMultiplier(), this.toHoldPosition, this);*/
-        }, this);
+        TweenUtils.delayedCall(100 * this.getMultiplier(), callback, context);
+        TweenUtils.moveAndRotate(this.container, point.x, point.y + 5 * this.getMultiplier(), 0, 210 * this.getMultiplier(), 0, () => {}, this);
         return true;
+    }
+
+    processMob(mob: Mob|Boss) {
+        if (mob === null) {
+            this.animating = false;
+            TweenUtils.delayedCall(200 * this.getMultiplier(), this.toHoldPosition, this);
+            return;
+        }
+        if (mob.isDead() && mob.getType() !== MonsterType.BOSS)
+            this.addKish(mob.getType());
+        TweenUtils.scale(this.container, .95, 150 * this.getMultiplier(), 0, true, () => {
+            if (mob.getType() === MonsterType.WASP && this.game.rnd.between(0, 100) < 5) { // % TODO
+                this.addWaspBite();
+                if (SoundUtils.isSoundEnabled())
+                    SoundUtils.playFX('Ouch');
+            }
+            else if (mob.getType() === MonsterType.SPIDER && !this.spiderBited && this.game.rnd.between(0, 100) < 5) { // SPIDY TODO
+                this.spiderBited = true;
+                this.animating = false;
+                TweenUtils.fadeIn(this.web, 250);
+                if (SoundUtils.isSoundEnabled())
+                    SoundUtils.playFX('Web');
+            }
+            else {
+                this.animating = false;
+            }
+            TweenUtils.delayedCall(20 * this.getMultiplier(), this.toHoldPosition, this);
+        }, this);
     }
 
     private getMultiplier(): number {
@@ -115,11 +130,11 @@ export class GFinger {
 
     private addWaspBite() {
         this.waspBited = true;
-        TweenUtils.fade(this.spot, 1, 250 * 1.4, 0, 2, true);
-        TweenUtils.fade(this.ouch1, 1, 250 * 1.4, 0, 0, false, () => {
-            TweenUtils.fade(this.ouch2, 1, 250 * 1.4, 0, 2, true);
-            TweenUtils.delayedCall(1500 * 1.4, () => {
-                TweenUtils.fadeOut(this.ouch1, 250 * 1.4);
+        TweenUtils.fade(this.spot, 1, 100 * 1.4, 0, 2, true);
+        TweenUtils.fade(this.ouch1, 1, 100 * 1.4, 0, 0, false, () => {
+            TweenUtils.fade(this.ouch2, 1, 100 * 1.4, 0, 2, true);
+            TweenUtils.delayedCall(610 * 1.4, () => {
+                TweenUtils.fadeOut(this.ouch1, 100 * 1.4);
                 this.waspBited = false;
                 this.animating = false;
                 this.toHoldPosition();
@@ -127,13 +142,26 @@ export class GFinger {
         }, this);
     }
 
+    public getPosition(): Phaser.Point {
+        return this.container.position;
+    }
+
+    public getSmashPosition(): Phaser.Point {
+        return this.smashPoint;
+    }
+
     public toHoldPosition() {
         if (this.waspBited || this.animating)
             return;
-        TweenUtils.moveAndRotate(this.container, 465, 670, -30, 300 * this.getMultiplier());
+        TweenUtils.moveAndRotate(this.container, 700, 960, 0, 300 * this.getMultiplier());
     }
 
     public toOutPosition() {
         TweenUtils.moveAndRotate(this.container, 700, 960, 0, 300 * this.getMultiplier());
+    }
+
+    public dispose() {
+        this.container.removeAll(true, true, true);
+        this.container.destroy(true);
     }
 }

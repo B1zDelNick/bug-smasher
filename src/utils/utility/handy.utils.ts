@@ -13,7 +13,7 @@ export class HandyUtils {
 		}
 		return array;
 	}
-	
+
 	public static intToTime(val: number): string {
 		let min = Math.floor(val / 60);
 		let sec = val - min * 60;
@@ -21,7 +21,7 @@ export class HandyUtils {
 		let secStr = sec.toString().length === 1 ? '0' + sec : sec.toString();
 		return minStr + ':' + secStr;
 	}
-	
+
 	public static contains(el: any, array: any[]): boolean {
 		for (let e of array) {
 			if (e === el)

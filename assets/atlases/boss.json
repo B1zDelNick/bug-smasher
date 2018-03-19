@@ -1,0 +1,93 @@
+{"frames": [
+
+{
+	"filename": "body.png",
+	"frame": {"x":223,"y":169,"w":276,"h":365},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":276,"h":365},
+	"sourceSize": {"w":276,"h":365},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "claws.png",
+	"frame": {"x":179,"y":0,"w":71,"h":78},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":71,"h":78},
+	"sourceSize": {"w":71,"h":78},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "glass.png",
+	"frame": {"x":339,"y":0,"w":94,"h":64},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":94,"h":64},
+	"sourceSize": {"w":94,"h":64},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "l_hand.png",
+	"frame": {"x":112,"y":0,"w":67,"h":166},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":67,"h":166},
+	"sourceSize": {"w":67,"h":166},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "l_us.png",
+	"frame": {"x":111,"y":169,"w":112,"h":297},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":297},
+	"sourceSize": {"w":112,"h":297},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "r_hand.png",
+	"frame": {"x":45,"y":0,"w":67,"h":169},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":67,"h":169},
+	"sourceSize": {"w":67,"h":169},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "r_us.png",
+	"frame": {"x":0,"y":169,"w":111,"h":297},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":111,"h":297},
+	"sourceSize": {"w":111,"h":297},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "smoke.png",
+	"frame": {"x":250,"y":0,"w":89,"h":107},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":89,"h":107},
+	"sourceSize": {"w":89,"h":107},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "truba.png",
+	"frame": {"x":0,"y":0,"w":45,"h":92},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":45,"h":92},
+	"sourceSize": {"w":45,"h":92},
+	"pivot": {"x":0.5,"y":0.5}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "boss.png",
+	"format": "RGBA8888",
+	"size": {"w":499,"h":534},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:0debd8a87ae950d6f0935fcb83f3a37f:403f1bab3dc17ab21d05edc88fea90f4:46ed12eff2905e238af2d2a3f055c310$"
+}
+}

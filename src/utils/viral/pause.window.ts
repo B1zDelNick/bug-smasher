@@ -2,6 +2,7 @@ import {GadgetMode, GameConfig} from '../../config/game.config';
 import {ImageUtils} from '../images/image.utils';
 import {GuiUtils} from '../gui.utils';
 import {TweenUtils} from '../tween.utils';
+import {SoundUtils} from '../sound/sound.utils';
 
 export class PauseWindow {
 
@@ -52,8 +53,13 @@ export class PauseWindow {
 
 	private onContinue() {
 	    this.hide();
-	    if (this.onContinueHandler)
-		    TweenUtils.delayedCall(1000, this.onContinueHandler, this.parent);
+        this.game.time.events.resume();
+	    if (this.onContinueHandler) {
+	        TweenUtils.delayedCall(1000, this.onContinueHandler, this.parent);
+	        TweenUtils.delayedCall(1000, () => {
+                this.game.tweens.resumeAll();
+            }, this);
+        }
 	}
 
 	setListeners(callback: Function, context: any) {
@@ -61,23 +67,45 @@ export class PauseWindow {
 		this.parent = context;
 	}
 
-	show() {
+	show(forced: boolean = false) {
+        if (SoundUtils.isSoundEnabled())
+            SoundUtils.playFX('Pause');
         this.fader.inputEnabled = true;
-	    TweenUtils.fadeIn(this.fader, 500, 0, () => {
-            TweenUtils.slideIn(this.container, 0, 1000, 0, () => {
-                this.continueBtn.inputEnabled = true;
+        this.game.tweens.pauseAll();
+        this.game.time.events.pause();
+        if (!forced) {
+            TweenUtils.fadeIn(this.fader, 500, 0, () => {
+                TweenUtils.slideIn(this.container, 0, 1000, 0, () => {
+                    this.continueBtn.inputEnabled = true;
+                    /*this.game.tweens.pauseAll();
+                    this.game.time.events.pause();*/
+                }, this);
             }, this);
-        }, this);
+        }
+        else {
+            this.fader.alpha = 1;
+            this.container.x = 0;
+            this.continueBtn.inputEnabled = true;
+            /*this.game.tweens.pauseAll();
+            this.game.time.events.pause();*/
+        }
 	}
 
 	hide() {
 	    this.continueBtn.inputEnabled = false;
+	    /*TweenUtils.delayedCall(1500, () => {
+            this.fader.inputEnabled = false;
+        }, this);*/
 		TweenUtils.slideOut(this.container, -540, 1000, 0, () => {
 		    TweenUtils.fadeOut(this.fader, 500, 0, () => {
                 this.fader.inputEnabled = false;
             }, this);
         }, this);
 	}
+
+    enforceInput() {
+        this.fader.inputEnabled = false;
+    }
 
 	dispose() {
 		if (this.continueBtn) this.continueBtn.destroy(true);

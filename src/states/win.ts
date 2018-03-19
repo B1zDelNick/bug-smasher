@@ -14,10 +14,12 @@ import {UnblockWindow} from '../utils/viral/unblock.window';
 import {PauseWindow} from '../utils/viral/pause.window';
 import {QuitWindow} from '../utils/viral/quit.window';
 import {WeaponWindow} from '../utils/viral/weapon.window';
+import {isUndefined} from 'util';
+import {SoundUtils} from '../utils/sound/sound.utils';
 
 export default class Win extends Phaser.State {
 
-    private NEXT = 'Select';
+    private NEXT = 'SelectStage';
     private nextPrepared = false;
 
     private gui: InstantGui = null;
@@ -41,11 +43,20 @@ export default class Win extends Phaser.State {
     private st4: Phaser.Sprite = null;
     private st5: Phaser.Sprite = null;
 
+    private weapWin: WeaponWindow = null;
+
     private spinner: Phaser.Sprite = null;
     private blocker: Phaser.Graphics = null;
 
+    private points: number = 0;
+
     public init(...args: any[]): void {
         this.gui = new InstantGui(this);
+        this.points = args[0] as number;
+        GameConfig.PLAYER_DATA.addCoins(this.points);
+        SoundUtils.play('MainTheme');
+        if (SoundUtils.isSoundEnabled())
+            SoundUtils.playFX('Win');
     }
 
     public preload(): void {
@@ -125,7 +136,8 @@ export default class Win extends Phaser.State {
             fill: '#775A07',
             fontSize: 90
         };
-        this.scoreTxt = this.game.add.text(13, 28, '2500', style);
+        this.scoreTxt = this.game.add.text(13, 28, this.points.toString(), style);
+        this.scoreTxt.setShadow(3, 3, 'rgba(0,0,0,0.3)', 3);
         GuiUtils.centrize(this.scoreTxt);
         this.scoreTxt.position.setTo(270, 610);
         this.scoreTxt.setShadow(3, 3, 'rgba(0,0,0,0.3)', 3);
@@ -147,7 +159,19 @@ export default class Win extends Phaser.State {
             ImageUtils.getAtlasClass('AtlasesGui').getName(),
             ImageUtils.getAtlasClass('AtlasesGui').Frames.YesBtn,
             true, false, true,
-            null,
+            () => {
+                if (GameConfig.SELECTED_STAGE === 8 && GameConfig.SELECTED_LVL === 8) {
+                    this.NEXT = 'SelectLevel';
+                }
+                else if (GameConfig.SELECTED_STAGE === 8) {
+                    GameConfig.SELECTED_STAGE = 1;
+                    GameConfig.SELECTED_LVL++;
+                }
+                else {
+                    GameConfig.SELECTED_STAGE++;
+                }
+                this.nextState();
+            },
             GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOverHandler : null,
             GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOutHandler : null
         );
@@ -156,27 +180,51 @@ export default class Win extends Phaser.State {
 
         // GUI Buttons
         this.gui.addGui();
-        this.gui.addHomeBtn(null);
-        /*this.shareBtn = this.gui.addExtraBtn(323, 672,
-            ImageUtils.getAtlasClass('AtlasesGui').getName(),
-            ImageUtils.getAtlasClass('AtlasesGui').Frames.ShareBtn,
-            null
-        );*/
+        this.gui.addHomeBtn(() => {
+            this.NEXT = 'SelectStage';
+            this.nextState();
+        });
+        this.gui.addShopBtn(() => {
+            this.NEXT = 'Shop';
+            this.nextState();
+        });
 
-        /*const vw: InviteWindow = ViralUtils.addInviteWindow();
-         TweenUtils.delayedCall(1000, vw.show, vw);*/
-        /*const vw: UnblockWindow = ViralUtils.addUnblockWindow();
-        TweenUtils.delayedCall(1000, vw.show, vw);*/
-        /*const vw: PauseWindow = ViralUtils.addPauseWindow();
-        vw.setListeners(() => {
-            alert('Test');
-        }, this);
-        TweenUtils.delayedCall(1000, vw.show, vw);*/
-        /*const vw: QuitWindow = ViralUtils.addQuitWindow();
-        TweenUtils.delayedCall(1000, vw.show, vw);*/
-        /*const vw: WeaponWindow = ViralUtils.addWeaponWindow();
-        vw.setWeapon(WeaponType.SPRAY);
-        TweenUtils.delayedCall(1000, vw.show, vw);*/
+        this.weapWin = ViralUtils.addWeaponWindow();
+        if (GameConfig.SELECTED_LVL === 1 &&
+            GameConfig.SELECTED_STAGE === 8 &&
+            isUndefined(GameConfig.PLAYER_DATA.arsenal[WeaponType.SLIPPER])) {
+            this.weapWin.setWeapon(WeaponType.SLIPPER);
+            TweenUtils.delayedCall(1000, this.weapWin.show, this.weapWin);
+            GameConfig.PLAYER_DATA.arsenal[WeaponType.SLIPPER] = 999;
+        }
+        if (GameConfig.SELECTED_LVL === 2 &&
+            GameConfig.SELECTED_STAGE === 8 &&
+            isUndefined(GameConfig.PLAYER_DATA.arsenal[WeaponType.CHALK])) {
+            this.weapWin.setWeapon(WeaponType.CHALK);
+            TweenUtils.delayedCall(1000, this.weapWin.show, this.weapWin);
+            GameConfig.PLAYER_DATA.arsenal[WeaponType.CHALK] = 999;
+        }
+        if (GameConfig.SELECTED_LVL === 3 &&
+            GameConfig.SELECTED_STAGE === 8 &&
+            isUndefined(GameConfig.PLAYER_DATA.arsenal[WeaponType.POISON])) {
+            this.weapWin.setWeapon(WeaponType.POISON);
+            TweenUtils.delayedCall(1000, this.weapWin.show, this.weapWin);
+            GameConfig.PLAYER_DATA.arsenal[WeaponType.POISON] = 999;
+        }
+        if (GameConfig.SELECTED_LVL === 4 &&
+            GameConfig.SELECTED_STAGE === 8 &&
+            isUndefined(GameConfig.PLAYER_DATA.arsenal[WeaponType.GFINGER])) {
+            this.weapWin.setWeapon(WeaponType.GFINGER);
+            TweenUtils.delayedCall(1000, this.weapWin.show, this.weapWin);
+            GameConfig.PLAYER_DATA.arsenal[WeaponType.GFINGER] = 999;
+        }
+        if (GameConfig.SELECTED_LVL === 5 &&
+            GameConfig.SELECTED_STAGE === 8 &&
+            isUndefined(GameConfig.PLAYER_DATA.arsenal[WeaponType.SPRAY])) {
+            this.weapWin.setWeapon(WeaponType.SPRAY);
+            TweenUtils.delayedCall(1000, this.weapWin.show, this.weapWin);
+            GameConfig.PLAYER_DATA.arsenal[WeaponType.SPRAY] = 999;
+        }
 
         // Animations goes here
 	    this.game.camera.flash(0x000000, 1000);
@@ -200,6 +248,24 @@ export default class Win extends Phaser.State {
         this.game.time.events.removeAll();
         this.game.tweens.removeAll();
         if (this.bg) this.bg.destroy(true);
+        if (this.bug1) this.bug1.destroy(true);
+        if (this.bug2) this.bug2.destroy(true);
+        if (this.label) this.label.destroy(true);
+        if (this.board) this.board.destroy(true);
+        if (this.paper) this.paper.destroy(true);
+        if (this.scorePanel) this.scorePanel.destroy(true);
+        if (this.scoreLabel) this.scoreLabel.destroy(true);
+        if (this.scoreTxt) this.scoreTxt.destroy(true);
+        if (this.share) this.share.destroy(true);
+        if (this.shareBtn) this.shareBtn.destroy(true);
+        if (this.playBtn) this.playBtn.destroy(true);
+        if (this.scoreLabel) this.scoreLabel.destroy(true);
+        if (this.st1) this.st1.destroy(true);
+        if (this.st2) this.st2.destroy(true);
+        if (this.st3) this.st3.destroy(true);
+        if (this.st4) this.st4.destroy(true);
+        if (this.st5) this.st5.destroy(true);
+        if (this.weapWin) this.weapWin.dispose();
         if (this.container) this.container.destroy(true);
         if (this.spinner) this.spinner.destroy(true);
         if (this.blocker) this.blocker.destroy(true);
@@ -229,7 +295,10 @@ export default class Win extends Phaser.State {
 
     private reallyGoNextState(addLoader: boolean = false): void {
         if (this.nextPrepared) {
-            this.game.state.start(this.NEXT, false, false);
+            if ('Shop' === this.NEXT)
+                this.game.state.start(this.NEXT, false, false, 'Win');
+            else
+                this.game.state.start(this.NEXT, false, false);
         } else {
             if (addLoader) {
                 this.spinner = this.game.add.sprite(

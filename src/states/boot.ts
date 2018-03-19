@@ -37,7 +37,7 @@ export default class Boot extends Phaser.State {
         // Do anything here that you need to be setup immediately, before the game actually starts doing anything.
 
         // Enable background activity
-        this.stage.disableVisibilityChange = true;
+        this.stage.disableVisibilityChange = false;
 
         // Uncomment the following to disable multitouch
         this.input.maxPointers = 1;
@@ -45,6 +45,22 @@ export default class Boot extends Phaser.State {
         this.game.scale.scaleMode = Phaser.ScaleManager[SCALE_MODE];
         // A little Matrixing the time flow
         this.game.time.desiredFps = 60;
+        /*this.game.onBlur.add(() => {
+            console.log('On Blur');
+        });
+        this.game.onFocus.add(() => {
+            console.log('On Focus');
+        });
+        this.game.onPause.add(() => {
+            console.log('On Pause');
+            this.game.tweens.pauseAll();
+            this.game.time.events.pause();
+        });
+        this.game.onResume.add(() => {
+            console.log('On Resume');
+            this.game.tweens.resumeAll();
+            this.game.time.events.resume();
+        });*/
 
         if (SCALE_MODE === 'USER_SCALE') {
             let screenMetrics: Utils.ScreenMetrics = Utils.ScreenUtils.screenMetrics;

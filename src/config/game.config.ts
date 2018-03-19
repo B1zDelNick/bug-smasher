@@ -21,8 +21,8 @@ export class GameConfig {
     public static LEVELS_DATA: Array<any> = null;
 
     public static SELECTED_BG: number = 0;
-    public static SELECTED_LVL: number = 1;
-    public static SELECTED_STAGE: number = 3;
+    public static SELECTED_LVL: number = 8;
+    public static SELECTED_STAGE: number = 2;
     public static PROGRESS: number = 0;
     public static SCORE_1: number = 0;
     public static SCORE_2: number = 0;
@@ -91,4 +91,5 @@ export enum MonsterType {
     SPIDER = 'Spidy',
     COC = 'Coc',
     BIG_COC = 'Bcoc',
+    BOSS = 'Boss',
 }

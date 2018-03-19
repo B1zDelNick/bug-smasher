@@ -1,0 +1,44 @@
+{"frames": [
+
+{
+	"filename": "bug.png",
+	"frame": {"x":0,"y":110,"w":325,"h":390},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":325,"h":390},
+	"sourceSize": {"w":325,"h":390}
+},
+{
+	"filename": "label_en.png",
+	"frame": {"x":444,"y":0,"w":444,"h":110},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":444,"h":110},
+	"sourceSize": {"w":444,"h":110}
+},
+{
+	"filename": "label_ru.png",
+	"frame": {"x":0,"y":0,"w":444,"h":110},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":444,"h":110},
+	"sourceSize": {"w":444,"h":110}
+},
+{
+	"filename": "panel.png",
+	"frame": {"x":325,"y":110,"w":498,"h":443},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":498,"h":443},
+	"sourceSize": {"w":498,"h":443}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "popup_pause.png",
+	"format": "RGBA8888",
+	"size": {"w":888,"h":553},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:0415cead4aa75a1609e26e78b7fa6586:c065f062874557c574eac15827017a9c:ea6065d816d7603a08d1f64cd4622556$"
+}
+}

@@ -1,0 +1,57 @@
+{"frames": [
+
+{
+	"filename": "coin.png",
+	"frame": {"x":0,"y":0,"w":53,"h":62},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":53,"h":62},
+	"sourceSize": {"w":53,"h":62},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "gift.png",
+	"frame": {"x":540,"y":110,"w":209,"h":186},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":209,"h":186},
+	"sourceSize": {"w":209,"h":186},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "lvl.png",
+	"frame": {"x":53,"y":0,"w":67,"h":87},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":67,"h":87},
+	"sourceSize": {"w":67,"h":87},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "panel.png",
+	"frame": {"x":120,"y":0,"w":540,"h":110},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":540,"h":110},
+	"sourceSize": {"w":540,"h":110},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "table.png",
+	"frame": {"x":0,"y":110,"w":540,"h":176},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":540,"h":176},
+	"sourceSize": {"w":540,"h":176},
+	"pivot": {"x":0.5,"y":0.5}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "state_level.png",
+	"format": "RGBA8888",
+	"size": {"w":749,"h":296},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:a6acd338249ac3b0b5e8ef31ca78d14d:3c69d841ce77d8a43f4881498770744d:e745f9156d1717cbe46799e9b60b3510$"
+}
+}

@@ -2,6 +2,7 @@ import {GameConfig, LOCALE} from '../../../config/game.config';
 import {ImageUtils} from '../../../utils/images/image.utils';
 import {GuiUtils} from '../../../utils/gui.utils';
 import {TweenUtils} from '../../../utils/tween.utils';
+import {HandyUtils} from '../../../utils/utility/handy.utils';
 
 export class TopUi {
     private game: Phaser.Game = null;
@@ -13,6 +14,7 @@ export class TopUi {
     private level: Phaser.Text = null;
     private level2: Phaser.Text = null;
     private score: Phaser.Text = null;
+    private points: number = 0;
 
     constructor() {
         this.game = GameConfig.GAME;
@@ -54,10 +56,23 @@ export class TopUi {
         this.level2 = this.game.add.text(227, 23, GameConfig.SELECTED_STAGE.toString(), style2, this.container);
         GuiUtils.centrize(this.level2);
         this.level2.setShadow(3, 3, 'rgba(0,0,0,0.3)', 3);
-        this.score = this.game.add.text(336, 28, '2500', style, this.container);
-        GuiUtils.centrize(this.score);
+        this.score = this.game.add.text(336, 28, '0', style, this.container);
+        // GuiUtils.centrize(this.score);
         this.score.setShadow(3, 3, 'rgba(0,0,0,0.3)', 3);
         this.container.y = -100;
+    }
+
+    public setTime(val: number) {
+        this.time.setText(HandyUtils.intToTime(val));
+    }
+
+    public addPoints(val: number) {
+        this.points += val;
+        this.score.setText(this.points.toString());
+    }
+
+    public getPoints(): number {
+        return this.points;
     }
 
     public show() {
@@ -69,6 +84,7 @@ export class TopUi {
     }
 
     public dispose() {
+        this.container.removeAll(true, true, true);
         this.container.destroy(true);
     }
 }

@@ -3,6 +3,7 @@ import {UnblockWindow} from './unblock.window';
 import {PauseWindow} from './pause.window';
 import {QuitWindow} from './quit.window';
 import {WeaponWindow} from './weapon.window';
+import {BuyCoinsWindow} from './buycoins.window';
 
 export class ViralUtils {
 	public static addInviteWindow(): InviteWindow {
@@ -23,5 +24,9 @@ export class ViralUtils {
 
     public static addWeaponWindow(): WeaponWindow {
         return new WeaponWindow();
+    }
+
+    public static addBuyCoinsWindow(): BuyCoinsWindow {
+        return new BuyCoinsWindow();
     }
 }

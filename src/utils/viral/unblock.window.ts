@@ -16,6 +16,7 @@ export class UnblockWindow {
 	private inviteBtn: Phaser.Button = null;
 	private buyBtn: Phaser.Button = null;
 	private onInviteHandler: Function = null;
+	private onBuyHandler: Function = null;
 	private parent: any = null;
 
 	constructor() {
@@ -58,10 +59,14 @@ export class UnblockWindow {
             ImageUtils.getAtlasClass('AtlasesPopups').getName(),
             ImageUtils.getAtlasClass('AtlasesPopups').Frames.CoinBtn,
             false, false, true,
-            this.onInvite,
+            this.onBuy,
             GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOverHandler : null,
             GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOutHandler : null
         );
+        /*if (GameConfig.PLAYER_DATA.coins < 2500) {
+            this.buyBtn.inputEnabled = false;
+            this.buyBtn.alpha = .55;
+        }*/
 		this.closeBtn = GuiUtils.makeButton(this, this.container, 415, 127, 1, '',
 			ImageUtils.getAtlasClass('AtlasesGui').getName(),
 			ImageUtils.getAtlasClass('AtlasesGui').Frames.CloseBtn,
@@ -75,11 +80,18 @@ export class UnblockWindow {
 	}
 
 	private onInvite() {
-		TweenUtils.delayedCall(500, this.onInviteHandler, this.parent);
+	    this.hide();
+		TweenUtils.delayedCall(1500, this.onInviteHandler, this.parent);
 	}
 
-	setListeners(inviteCallback: Function, context: any) {
+    private onBuy() {
+        this.hide();
+        TweenUtils.delayedCall(1500, this.onBuyHandler, this.parent);
+    }
+
+	setListeners(buyCallback: Function, inviteCallback: Function, context: any) {
 		this.onInviteHandler = inviteCallback;
+		this.onBuyHandler = buyCallback;
 		this.parent = context;
 	}
 
@@ -114,6 +126,9 @@ export class UnblockWindow {
 		if (this.txt2) this.txt2.destroy(true);
 		if (this.panel) this.panel.destroy(true);
 		if (this.fader) this.fader.destroy(true);
-		if (this.container) this.container.destroy(true);
+        this.container.removeAll(true, true, true);
+        this.container.destroy(true);
+		if (this.onInviteHandler) this.onInviteHandler = null;
+		if (this.onBuyHandler) this.onBuyHandler = null;
 	}
 }

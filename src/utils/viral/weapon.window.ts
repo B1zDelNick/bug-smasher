@@ -2,6 +2,7 @@ import {GadgetMode, GameConfig, WeaponType} from '../../config/game.config';
 import {ImageUtils} from '../images/image.utils';
 import {GuiUtils} from '../gui.utils';
 import {TweenUtils} from '../tween.utils';
+import {SoundUtils} from '../sound/sound.utils';
 
 export class WeaponWindow {
 
@@ -135,6 +136,8 @@ export class WeaponWindow {
 	}
 
 	show() {
+        if (SoundUtils.isSoundEnabled())
+            SoundUtils.playFX('NewWeapon');
         this.fader.inputEnabled = true;
 	    TweenUtils.fadeIn(this.fader, 500, 0, () => {
             TweenUtils.slideIn(this.container, 0, 1000, 0, () => {
@@ -162,6 +165,7 @@ export class WeaponWindow {
 		if (this.weapon) this.weapon.destroy(true);
 		if (this.panel) this.panel.destroy(true);
 		if (this.fader) this.fader.destroy(true);
-		if (this.container) this.container.destroy(true);
+        this.container.removeAll(true, true, true);
+        this.container.destroy(true);
 	}
 }

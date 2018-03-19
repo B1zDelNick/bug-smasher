@@ -3,20 +3,27 @@ import {MobData} from '../../../../data/mob.data';
 import {GuiUtils} from '../../../../utils/gui.utils';
 import {ImageUtils} from '../../../../utils/images/image.utils';
 import {TweenUtils} from '../../../../utils/tween.utils';
+import {SoundUtils} from '../../../../utils/sound/sound.utils';
 
 export class Mob {
 
     private lanes: number[] = [54, 125, 206, 286, 384, 486];
     private data: MobData;
     private game: Phaser.Game = null;
-    private container: Phaser.Group = null;
+    public container: Phaser.Group = null;
     private bug: Phaser.Sprite = null;
     private splash: Phaser.Sprite = null;
     private bound: Phaser.Graphics = null;
     private isJumping: boolean = true;
+    private isBerserk: boolean = false;
     private jumpingAv: number = 0;
     private hp: number = 0;
+    private slower: number = 0;
+    private poisoned: number = 0;
+    private chalked: number = 0;
+    private jumpDelation: number = 85;
     public onClick: Phaser.Signal = new Phaser.Signal();
+    public onDead: Phaser.Signal = new Phaser.Signal();
 
     constructor(parent: Phaser.Group, data: MobData, x: number, y: number) {
         this.game = GameConfig.GAME;
@@ -50,11 +57,68 @@ export class Mob {
         this.bound.position.setTo(-this.bound.width / 2, -this.bound.height / 2);
         this.container.position.setTo(x, y);
         parent.add(this.container);
+        this.isBerserk = this.game.rnd.between(0, 100) < this.data.berserk;
+        if (this.getType() === MonsterType.FLY || this.getType() === MonsterType.WASP) {
+            this.jumpDelation = 75;
+        }
     }
 
     public makeDamage(weapon: WeaponType): boolean {
-        this.hp--;
+        this.slower = 100;
+        if (this.getType() === MonsterType.BIG_COC) {
+            this.slower = 10;
+        }
+        if (weapon === WeaponType.POISON) {
+            this.poisoned = 90;
+            this.hp--;
+            this.hp--;
+            this.hp--;
+            this.hp--;
+            this.hp--;
+        }
+        if (weapon === WeaponType.CHALK) {
+            this.chalked = 90;
+            this.hp--;
+            this.hp--;
+            this.hp--;
+        }
+        if (weapon === WeaponType.SLIPPER) {
+            this.chalked = 90;
+            this.hp--;
+            this.hp--;
+            this.hp--;
+        }
+        if (weapon === WeaponType.GFINGER) {
+            this.chalked = 90;
+            this.hp--;
+            this.hp--;
+            this.hp--;
+            this.hp--;
+        }
+        if (weapon === WeaponType.FINGER) {
+            this.chalked = 90;
+            this.hp--;
+        }
+        if (weapon === WeaponType.SPRAY) {
+            this.chalked = 90;
+            this.hp--;
+            this.hp--;
+            this.hp--;
+        }
         if (0 >= this.hp) {
+            if (this.getType() === MonsterType.LARVA) {
+                this.onDead.dispatch(new Phaser.Point(this.container.x, this.container.y));
+                if (SoundUtils.isSoundEnabled())
+                    SoundUtils.playFX('LarvaKilled');
+            }
+            else if (this.getType() === MonsterType.BIG_COC) {
+                if (SoundUtils.isSoundEnabled())
+                    SoundUtils.playFX('BtKilled');
+            }
+            else {
+                if (SoundUtils.isSoundEnabled())
+                    SoundUtils.playFX('BugKilled');
+            }
             this.bound.inputEnabled = false;
             TweenUtils.kill(this.container);
             TweenUtils.kill(this.container.scale);
@@ -62,15 +126,26 @@ export class Mob {
             TweenUtils.fadeAndScaleIn(this.splash, 300);
             return true;
         }
+        else {
+            /*TweenUtils.kill(this.container);
+            TweenUtils.kill(this.container.scale);*/
+            TweenUtils.damageMob(this.container);
+        }
         return false;
     }
 
+    public isDead(): boolean {
+        return 0 >= this.hp;
+    }
+
     public getY(): number {
-        return this.container.y;
+        if (this.container !== null)
+            return this.container.y;
     }
 
     public getX(): number {
-        return this.container.x;
+        if (this.container !== null)
+            return this.container.x;
     }
 
     public getType(): MonsterType {
@@ -78,7 +153,29 @@ export class Mob {
     }
 
     public fadeOut() {
-        TweenUtils.fadeAndScaleOut(this.container, 200);
+        if (this.container !== null)
+            TweenUtils.fadeAndScaleOut(this.container, 200);
+    }
+
+    public getReward(): number {
+        return this.data.reward;
+    }
+
+    public kill() {
+        this.hp = -1;
+        this.bound.inputEnabled = false;
+        TweenUtils.kill(this.container);
+        TweenUtils.kill(this.container.scale);
+        TweenUtils.fadeAndScaleOut(this.bug, 200);
+        TweenUtils.fadeAndScaleIn(this.splash, 300, 0, () => {
+            if (this.getType() === MonsterType.LARVA) {
+                this.onDead.dispatch(new Phaser.Point(this.container.x, this.container.y));
+            }
+        }, this);
+        TweenUtils.delayedCall(1000, () => {
+            this.fadeOut();
+            TweenUtils.delayedCall(300, this.dispose, this);
+        }, this);
     }
 
     public update() {
@@ -86,19 +183,20 @@ export class Mob {
             return;
         }
         this.jumpingAv++;
-        if (this.jumpingAv === 300) {
+        if (this.jumpingAv === this.jumpDelation) {
             this.isJumping = false;
         }
-        this.container.y += this.data.speed;
+        this.poisoned--;
+        this.chalked--;
+        this.slower -= 3;
+        if (1 > this.slower) this.slower = 1;
+        this.container.y += this.data.speed / this.slower * (this.isBerserk ? 1.7 : 1);
         if (!this.isJumping) {
             const jump = this.game.rnd.between(1, 100);
-            if (jump < this.data.jump) {
+            if (this.data.jump >= jump) {
                 this.isJumping = true;
-                if (this.data.type === MonsterType.FLY) {
+                if (this.data.type === MonsterType.FLY || this.data.type === MonsterType.WASP) {
                     let newX: number = -1;
-                    /*while (newX === this.container.x) {
-                        newX = this.lanes[this.game.rnd.between(0, this.lanes.length - 1)];
-                    }*/
                     for (let i = 0; i < this.lanes.length; i++) {
                         if (this.lanes[i] === this.container.x) {
                             if (i === 0) {
@@ -121,12 +219,55 @@ export class Mob {
                         this.jumpingAv = 0;
                     }, this);
                 }
+                else if (this.data.type === MonsterType.COC) {
+                    let newX: number = -1;
+                    for (let i = 0; i < this.lanes.length; i++) {
+                        if (this.lanes[i] === this.container.x) {
+                            if (i === 0) {
+                                newX = this.lanes[i + 1];
+                            }
+                            else if (i === this.lanes.length - 1) {
+                                newX = this.lanes[i - 1];
+                            }
+                            else {
+                                if (this.game.rnd.between(0, 100) > 50) {
+                                    newX = this.lanes[i + 1];
+                                }
+                                else {
+                                    newX = this.lanes[i - 1];
+                                }
+                            }
+                        }
+                    }
+                    if (newX > this.container.x) {
+                        TweenUtils.moveXAndRotateScaleInOut(this.container, newX, 1, -25, 3, 750, 0, () => {
+                            this.jumpingAv = 0;
+                        }, this);
+                    }
+                    else {
+                        TweenUtils.moveXAndRotateScaleInOut(this.container, newX, 1, 25, 3, 750, 0, () => {
+                            this.jumpingAv = 0;
+                        }, this);
+                    }
+                }
             }
         }
     }
 
+    public isPoisoned(): boolean {
+        return this.poisoned > 0;
+    }
+
+    public isChalked(): boolean {
+        return this.chalked > 0;
+    }
+
     public dispose() {
-        this.container.destroy(true);
-        this.onClick.dispose();
+        if (this.container !== null) {
+            this.container.removeAll(true, true, true);
+            this.container.destroy(true);
+            this.onClick.dispose();
+            this.container = null;
+        }
     }
 }

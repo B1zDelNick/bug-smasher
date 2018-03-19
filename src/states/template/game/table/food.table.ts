@@ -8,6 +8,7 @@ export class FoodTable {
     private container: Phaser.Group = null;
     private panel: Phaser.Sprite = null;
     private foods: FoodItem[] = [];
+    public onFoodEnded: Phaser.Signal = new Phaser.Signal();
 
     constructor() {
         this.game = GameConfig.GAME;
@@ -20,14 +21,69 @@ export class FoodTable {
         this.container.y = 200;
     }
 
+    public eatAllFood() {
+        if (this.foods.length === 0) {
+            this.onFoodEnded.dispatch();
+        }
+        else {
+            for (let i = this.foods.length - 1; i >= 0; i--) {
+                this.foods[i].eat();
+                this.foods.splice(i, 1);
+            }
+            this.onFoodEnded.dispatch();
+        }
+    }
+
+    public eatFood() {
+        if (this.foods.length === 0) {
+            return;
+        }
+        const tempFoods: FoodItem[] = [];
+        for (let f of this.foods) {
+            if (f !== null && !f.isPoisoned() && !f.isEated())
+                tempFoods.push(f);
+        }
+        if (tempFoods.length === 0) {
+            return;
+        }
+        const toEat = tempFoods[this.game.rnd.between(0, tempFoods.length - 1)];
+        toEat.eat();
+        for (let i = this.foods.length - 1; i >= 0; i--) {
+            if (this.foods[i].isEated()) {
+                this.foods.splice(i, 1);
+            }
+        }
+        if (this.foods.length === 0) {
+            this.onFoodEnded.dispatch();
+        }
+    }
+
+    public getRecentFood(): FoodItem[] {
+        return this.foods;
+    }
+
+    public addPoisonToRandomItem(pointTo: Phaser.Point): FoodItem {
+        const tempFoods: FoodItem[] = [];
+        for (let f of this.foods) {
+            if (f !== null && !f.isPoisoned() && !f.isEated())
+                tempFoods.push(f);
+        }
+        if (tempFoods.length === 0) {
+            console.log('NO FOOD AVAILABLE');
+            return;
+        }
+        const toPoison = tempFoods[this.game.rnd.between(0, tempFoods.length - 1)];
+        return toPoison.addPoison(pointTo);
+    }
+
     public addRandomFood(count: number) {
         if (count === 11) {
             for (let i = 0; i < 6; i++) {
-                const tp = new FoodItem(this.container, this.getRandomFoodType(), 46 + 90 * i, 833);
+                const tp = new FoodItem(this.container, this.getRandomFoodType(), 36 + 60 * i, 833);
                 this.foods.push(tp);
             }
             for (let i = 0; i < 5; i++) {
-                const tp = new FoodItem(this.container, this.getRandomFoodType(), 70 + 100 * i, 918);
+                const tp = new FoodItem(this.container, this.getRandomFoodType(), 50 + 60 * i, 918);
                 this.foods.push(tp);
             }
         }
@@ -66,6 +122,7 @@ export class FoodTable {
     }
 
     public dispose() {
+        this.container.removeAll(true, true, true);
         this.container.destroy(true);
     }
 }

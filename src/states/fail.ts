@@ -14,10 +14,11 @@ import {UnblockWindow} from '../utils/viral/unblock.window';
 import {PauseWindow} from '../utils/viral/pause.window';
 import {QuitWindow} from '../utils/viral/quit.window';
 import {WeaponWindow} from '../utils/viral/weapon.window';
+import {SoundUtils} from '../utils/sound/sound.utils';
 
 export default class Fail extends Phaser.State {
 
-    private NEXT = 'Select';
+    private NEXT = 'SelectStage';
     private nextPrepared = false;
 
     private gui: InstantGui = null;
@@ -38,8 +39,16 @@ export default class Fail extends Phaser.State {
     private spinner: Phaser.Sprite = null;
     private blocker: Phaser.Graphics = null;
 
+    private points: number = 0;
+
     public init(...args: any[]): void {
         this.gui = new InstantGui(this);
+        this.points = args[0] as number;
+        SoundUtils.play('MainTheme');
+        if (SoundUtils.isSoundEnabled())
+            SoundUtils.playFX('Loose1');
+        if (SoundUtils.isSoundEnabled())
+            SoundUtils.playFX('Loose2');
     }
 
     public preload(): void {
@@ -88,7 +97,7 @@ export default class Fail extends Phaser.State {
             fill: '#775A07',
             fontSize: 90
         };
-        this.scoreTxt = this.game.add.text(13, 28, '2500', style);
+        this.scoreTxt = this.game.add.text(13, 28, this.points.toString(), style);
         GuiUtils.centrize(this.scoreTxt);
         this.scoreTxt.position.setTo(270, 610);
         this.scoreTxt.setShadow(3, 3, 'rgba(0,0,0,0.3)', 3);
@@ -110,7 +119,9 @@ export default class Fail extends Phaser.State {
             ImageUtils.getAtlasClass('AtlasesGui').getName(),
             ImageUtils.getAtlasClass('AtlasesGui').Frames.YesBtn,
             true, false, true,
-            null,
+            () => {
+                this.nextState();
+            },
             GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOverHandler : null,
             GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOutHandler : null
         );
@@ -119,7 +130,14 @@ export default class Fail extends Phaser.State {
 
         // GUI Buttons
         this.gui.addGui();
-        this.gui.addHomeBtn(null);
+        this.gui.addHomeBtn(() => {
+            this.NEXT = 'SelectStage';
+            this.nextState();
+        });
+        this.gui.addShopBtn(() => {
+            this.NEXT = 'Shop';
+            this.nextState();
+        });
 
         // Animations goes here
 	    this.game.camera.flash(0x000000, 1000);
@@ -143,6 +161,16 @@ export default class Fail extends Phaser.State {
         this.game.time.events.removeAll();
         this.game.tweens.removeAll();
         if (this.bg) this.bg.destroy(true);
+        if (this.bug) this.bug.destroy(true);
+        if (this.label) this.label.destroy(true);
+        if (this.board) this.board.destroy(true);
+        if (this.paper) this.paper.destroy(true);
+        if (this.scorePanel) this.scorePanel.destroy(true);
+        if (this.scoreLabel) this.scoreLabel.destroy(true);
+        if (this.scoreTxt) this.scoreTxt.destroy(true);
+        if (this.share) this.share.destroy(true);
+        if (this.shareBtn) this.shareBtn.destroy(true);
+        if (this.playBtn) this.playBtn.destroy(true);
         if (this.container) this.container.destroy(true);
         if (this.spinner) this.spinner.destroy(true);
         if (this.blocker) this.blocker.destroy(true);
@@ -172,7 +200,10 @@ export default class Fail extends Phaser.State {
 
     private reallyGoNextState(addLoader: boolean = false): void {
         if (this.nextPrepared) {
-            this.game.state.start(this.NEXT, false, false);
+            if ('Shop' === this.NEXT)
+                this.game.state.start(this.NEXT, false, false, 'Win');
+            else
+                this.game.state.start(this.NEXT, false, false);
         } else {
             if (addLoader) {
                 this.spinner = this.game.add.sprite(

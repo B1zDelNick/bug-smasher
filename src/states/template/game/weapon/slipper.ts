@@ -7,6 +7,7 @@ export class Slipper {
 
     private game: Phaser.Game = null;
     private container: Phaser.Group = null;
+    public smashPoint: Phaser.Point = new Phaser.Point();
     private base: Phaser.Sprite = null;
     private web: Phaser.Sprite = null;
     private txt: Phaser.Sprite = null;
@@ -47,41 +48,71 @@ export class Slipper {
         }
     }
 
-    public smash(mob: Mob, callback: Function, context: any): boolean {
+    public smash(point: Phaser.Point, callback: Function, context: any): boolean {
         if (this.animating) {
             return false;
         }
         this.animating = true;
+        this.smashPoint = point;
         TweenUtils.kill(this.container);
         TweenUtils.kill(this.container.scale);
-        TweenUtils.delayedCall(200 * this.getMultiplier(), callback, context);
-        TweenUtils.moveAndRotate(this.container, mob.getX(), mob.getY() + 25 * this.getMultiplier(), 0, 210 * this.getMultiplier(), 0, () => {
-            TweenUtils.scale(this.container, .95, 150 * this.getMultiplier(), 0, true, () => {
-                if (mob.getType() === MonsterType.SPIDER && !this.spiderBited) { // SPIDY TODO
-                    this.spiderBited = true;
-                    this.animating = false;
-                    TweenUtils.fadeIn(this.web, 250);
-                }
-                else {
-                    this.animating = false;
-                }
-                TweenUtils.delayedCall(20 * this.getMultiplier(), this.toHoldPosition, this);
-            }, this);
-        }, this);
+        TweenUtils.delayedCall(100 * this.getMultiplier(), callback, context);
+        TweenUtils.moveAndRotate(this.container, point.x, point.y + 5 * this.getMultiplier(), 0, 110 * this.getMultiplier(), 0, () => {}, this);
         return true;
+    }
+
+    public processMob(mobs: Mob[]) {
+        /*if (mobs === null) {
+            this.animating = false;
+            TweenUtils.delayedCall(200 * this.getMultiplier(), this.toHoldPosition, this);
+            return;
+        }*/
+        TweenUtils.scale(this.container, .95, 150 * this.getMultiplier(), 0, true, () => {
+            if (this.containsSpiders(mobs) && !this.spiderBited) { // SPIDY TODO
+                this.spiderBited = true;
+                this.animating = false;
+                TweenUtils.fadeIn(this.web, 250);
+            }
+            else {
+                this.animating = false;
+            }
+            TweenUtils.delayedCall(20 * this.getMultiplier(), this.toHoldPosition, this);
+        }, this);
+    }
+
+    private containsSpiders(mobs: Mob[]): boolean {
+        for (let m of mobs) {
+            if (m.getType() === MonsterType.SPIDER) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private getMultiplier(): number {
         return this.spiderBited ? 2.5 : 1;
     }
 
+    public getPosition(): Phaser.Point {
+        return this.container.position;
+    }
+
+    public getSmashPosition(): Phaser.Point {
+        return this.smashPoint;
+    }
+
     public toHoldPosition() {
         if (this.animating)
             return;
-        TweenUtils.moveAndRotate(this.container, 538, 866, -34, 300 * this.getMultiplier());
+        TweenUtils.moveAndRotate(this.container, 700, 960, 0, 300 * this.getMultiplier());
     }
 
     public toOutPosition() {
         TweenUtils.moveAndRotate(this.container, 700, 960, 0, 300 * this.getMultiplier());
+    }
+
+    public dispose() {
+        this.container.removeAll(true, true, true);
+        this.container.destroy(true);
     }
 }

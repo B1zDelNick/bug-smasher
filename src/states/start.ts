@@ -6,10 +6,11 @@ import {InstantGui} from './gui/instant.gui';
 import {GuiButtons} from './gui/enum.gui';
 import {EffectUtils} from '../utils/effect.utils';
 import {GuiUtils} from '../utils/gui.utils';
+import {SoundUtils} from '../utils/sound/sound.utils';
 
 export default class Start extends Phaser.State {
 
-    private NEXT = 'Select';
+    private NEXT = 'SelectLevel';
     private nextPrepared = false;
 
     private gui: InstantGui = null;
@@ -24,6 +25,7 @@ export default class Start extends Phaser.State {
 
     public init(...args: any[]): void {
         this.gui = new InstantGui(this);
+        SoundUtils.play('MainTheme');
     }
 
     public preload(): void {

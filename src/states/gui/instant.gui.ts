@@ -30,6 +30,8 @@ export class InstantGui {
     private gearButtons: Phaser.Button[] = [];
     private sndonButton: Phaser.Button = null;
     private sndoffButton: Phaser.Button = null;
+    private musonButton: Phaser.Button = null;
+    private musoffButton: Phaser.Button = null;
 
     private extras: Array<Phaser.Button> = [];
     private extras2: Array<Phaser.Sprite> = [];
@@ -57,6 +59,7 @@ export class InstantGui {
                 true, false, true, this.onGearClick,
                 GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOverHandlerMcg : null,
                 GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOutHandlerMcg : null);
+        this.addMusicBtns();
         this.addSoundBtns();
         return this.gearButton;
     }
@@ -65,9 +68,13 @@ export class InstantGui {
         if (this.gearOpened) {
             let delay = 0;
             for (let i = this.gearButtons.length - 1; i >= 0; i--) {
-                if (this.gearButtons[i].name === 'mus') {
+                if (this.gearButtons[i].name === 'snd') {
                     TweenUtils.fadeAndScaleOut(this.sndonButton, Phaser.Timer.SECOND * .4, Phaser.Timer.SECOND * delay);
                     TweenUtils.fadeAndScaleOut(this.sndoffButton, Phaser.Timer.SECOND * .4, Phaser.Timer.SECOND * delay);
+                }
+                else if (this.gearButtons[i].name === 'mus') {
+                    TweenUtils.fadeAndScaleOut(this.musonButton, Phaser.Timer.SECOND * .4, Phaser.Timer.SECOND * delay);
+                    TweenUtils.fadeAndScaleOut(this.musoffButton, Phaser.Timer.SECOND * .4, Phaser.Timer.SECOND * delay);
                 }
                 else {
                     TweenUtils.fadeAndScaleOut(this.gearButtons[i], Phaser.Timer.SECOND * .4, Phaser.Timer.SECOND * delay);
@@ -78,9 +85,13 @@ export class InstantGui {
         else {
             let delay = 0;
             for (let i = 0; i < this.gearButtons.length; i++) {
-                if (this.gearButtons[i].name === 'mus') {
+                if (this.gearButtons[i].name === 'snd') {
                     TweenUtils.fadeAndScaleIn(this.sndonButton, Phaser.Timer.SECOND * .4, Phaser.Timer.SECOND * delay);
                     TweenUtils.fadeAndScaleIn(this.sndoffButton, Phaser.Timer.SECOND * .4, Phaser.Timer.SECOND * delay);
+                }
+                else if (this.gearButtons[i].name === 'mus') {
+                    TweenUtils.fadeAndScaleIn(this.musonButton, Phaser.Timer.SECOND * .4, Phaser.Timer.SECOND * delay);
+                    TweenUtils.fadeAndScaleIn(this.musoffButton, Phaser.Timer.SECOND * .4, Phaser.Timer.SECOND * delay);
                 }
                 else {
                     TweenUtils.fadeAndScaleIn(this.gearButtons[i], Phaser.Timer.SECOND * .4, Phaser.Timer.SECOND * delay);
@@ -113,7 +124,10 @@ export class InstantGui {
 				452, 107 + 72 * this.gearButtons.length, 1,
 				'', ImageUtils.getAtlasClass('AtlasesGui').getName(),
 				ImageUtils.getAtlasClass('AtlasesGui').Frames.HomeBtn,
-				true, false, true, callback,
+				true, false, true, () => {
+				    callback.call(this);
+                    this.onGearClick();
+                },
 				GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOverHandlerMcg : null,
 				GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOutHandlerMcg : null);
         temp.scale.setTo(0);
@@ -121,6 +135,63 @@ export class InstantGui {
         this.gearButtons.push(temp);
 		return temp;
 	}
+
+    addShopBtn(callback?: Function): Phaser.Button {
+        const temp =
+            GuiUtils.makeButton(
+                this.state, this.guiContainer,
+                452, 107 + 72 * this.gearButtons.length, 1,
+                '', ImageUtils.getAtlasClass('AtlasesGui').getName(),
+                ImageUtils.getAtlasClass('AtlasesGui').Frames.ShopBtn,
+                true, false, true, () => {
+                    callback.call(this);
+                    this.onGearClick();
+                },
+                GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOverHandlerMcg : null,
+                GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOutHandlerMcg : null);
+        temp.scale.setTo(0);
+        temp.alpha = 0;
+        this.gearButtons.push(temp);
+        return temp;
+    }
+
+    addLeadersBtn(callback?: Function): Phaser.Button {
+        const temp =
+            GuiUtils.makeButton(
+                this.state, this.guiContainer,
+                452, 107 + 72 * this.gearButtons.length, 1,
+                '', ImageUtils.getAtlasClass('AtlasesGui').getName(),
+                ImageUtils.getAtlasClass('AtlasesGui').Frames.LeadersBtn,
+                true, false, true, () => {
+                    callback.call(this);
+                    this.onGearClick();
+                },
+                GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOverHandlerMcg : null,
+                GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOutHandlerMcg : null);
+        temp.scale.setTo(0);
+        temp.alpha = 0;
+        this.gearButtons.push(temp);
+        return temp;
+    }
+
+    addPauseBtn(callback?: Function): Phaser.Button {
+        const temp =
+            GuiUtils.makeButton(
+                this.state, this.guiContainer,
+                452, 107 + 72 * this.gearButtons.length, 1,
+                '', ImageUtils.getAtlasClass('AtlasesGui').getName(),
+                ImageUtils.getAtlasClass('AtlasesGui').Frames.PauseBtn,
+                true, false, true, () => {
+                    callback.call(this);
+                    this.onGearClick();
+                },
+                GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOverHandlerMcg : null,
+                GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOutHandlerMcg : null);
+        temp.scale.setTo(0);
+        temp.alpha = 0;
+        this.gearButtons.push(temp);
+        return temp;
+    }
 
     addCopyrightBtn(callback?: Function): Phaser.Button {
         this.copyButton =
@@ -236,10 +307,13 @@ export class InstantGui {
             GuiUtils.makeButton(
                 this, this.guiContainer,
                 452, 107 + 72 * this.gearButtons.length, 1,
-                'mus', ImageUtils.getAtlasClass('AtlasesGui').getName(),
+                'snd', ImageUtils.getAtlasClass('AtlasesGui').getName(),
                 ImageUtils.getAtlasClass('AtlasesGui').Frames.SndOnBtn,
-                true, false, SoundUtils.isMusicEnabled(),
-                SoundUtils.mainThemeSwitch,
+                true, false, SoundUtils.isSoundEnabled(),
+                () => {
+                    SoundUtils.soundSwitch();
+                    this.onGearClick();
+                },
                 GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOverHandlerMcg : null,
                 GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOutHandlerMcg : null);
         const off =
@@ -248,13 +322,57 @@ export class InstantGui {
                 452, 107 + 72 * this.gearButtons.length, 1,
                 '', ImageUtils.getAtlasClass('AtlasesGui').getName(),
                 ImageUtils.getAtlasClass('AtlasesGui').Frames.SndOffBtn,
-                true, false, !SoundUtils.isMusicEnabled(),
-                SoundUtils.mainThemeSwitch,
+                true, false, !SoundUtils.isSoundEnabled(),
+                () => {
+                    SoundUtils.soundSwitch();
+                    this.onGearClick();
+                },
                 GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOverHandlerMcg : null,
                 GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOutHandlerMcg : null);
         this.gearButtons.push(on);
         this.sndonButton = on;
         this.sndoffButton = off;
+        on.scale.setTo(0);
+        on.alpha = 0;
+        off.scale.setTo(0);
+        off.alpha = 0;
+        SoundUtils.onSwitchSound.add(() => {
+            on.visible = !on.visible;
+            off.visible = !off.visible;
+        }, this);
+        return [on, off];
+    }
+
+    addMusicBtns(): Array<Phaser.Button> {
+        const on =
+            GuiUtils.makeButton(
+                this, this.guiContainer,
+                452, 107 + 72 * this.gearButtons.length, 1,
+                'mus', ImageUtils.getAtlasClass('AtlasesGui').getName(),
+                ImageUtils.getAtlasClass('AtlasesGui').Frames.MusOnBtn,
+                true, false, SoundUtils.isMusicEnabled(),
+                () => {
+                    SoundUtils.mainThemeSwitch();
+                    this.onGearClick();
+                },
+                GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOverHandlerMcg : null,
+                GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOutHandlerMcg : null);
+        const off =
+            GuiUtils.makeButton(
+                this, this.guiContainer,
+                452, 107 + 72 * this.gearButtons.length, 1,
+                '', ImageUtils.getAtlasClass('AtlasesGui').getName(),
+                ImageUtils.getAtlasClass('AtlasesGui').Frames.MusOffBtn,
+                true, false, !SoundUtils.isMusicEnabled(),
+                () => {
+                    SoundUtils.mainThemeSwitch();
+                    this.onGearClick();
+                },
+                GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOverHandlerMcg : null,
+                GameConfig.GADGET === GadgetMode.DESKTOP ? GuiUtils.addOutHandlerMcg : null);
+        this.gearButtons.push(on);
+        this.musonButton = on;
+        this.musoffButton = off;
         on.scale.setTo(0);
         on.alpha = 0;
         off.scale.setTo(0);

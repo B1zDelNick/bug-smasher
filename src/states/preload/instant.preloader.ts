@@ -49,9 +49,7 @@ export class InstanrPreloader implements IPreloader {
         this.game.load.setPreloadSprite(this.preloadBarSprite);
     }
 
-    public create(): void {
-        this.preloadBarSprite.visible = this.preloadFrameSprite.visible = false;
-    }
+    public create(): void {}
 
     public update(): void {
     }
@@ -65,6 +63,7 @@ export class InstanrPreloader implements IPreloader {
     }
 
     public enableButton(): void {
+        this.preloadBarSprite.visible = this.preloadFrameSprite.visible = false;
         DataInitializer.onInitCompleted.addOnce(this.nextState, this);
         DataInitializer.init();
         // this.nextState();

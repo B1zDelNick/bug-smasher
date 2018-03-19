@@ -10,6 +10,8 @@ import SelectLevel from './states/select.level';
 import SelectStage from './states/select.stage';
 import Win from './states/win';
 import Fail from './states/fail';
+import Leaders from './states/leaders';
+import Shop from './states/shop';
 
 class App extends Phaser.Game {
     constructor(config: Phaser.IGameConfig) {
@@ -23,6 +25,8 @@ class App extends Phaser.Game {
         this.state.add('SelectStage', SelectStage);
         this.state.add('Win', Win);
         this.state.add('Fail', Fail);
+        this.state.add('Leaders', Leaders);
+        this.state.add('Shop', Shop);
 
         this.state.start('Boot');
     }

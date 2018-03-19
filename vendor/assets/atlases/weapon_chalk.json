@@ -1,0 +1,48 @@
+{"frames": [
+
+{
+	"filename": "base.png",
+	"frame": {"x":0,"y":0,"w":211,"h":204},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":211,"h":204},
+	"sourceSize": {"w":211,"h":204},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "brush.png",
+	"frame": {"x":211,"y":0,"w":43,"h":29},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":43,"h":29},
+	"sourceSize": {"w":43,"h":29},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "txt.png",
+	"frame": {"x":254,"y":0,"w":211,"h":204},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":211,"h":204},
+	"sourceSize": {"w":211,"h":204},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "web.png",
+	"frame": {"x":465,"y":0,"w":211,"h":204},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":211,"h":204},
+	"sourceSize": {"w":211,"h":204},
+	"pivot": {"x":0.5,"y":0.5}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "weapon_chalk.png",
+	"format": "RGBA8888",
+	"size": {"w":676,"h":204},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:08f6a19933cbf28375d5eae1245f0dea:f854d2e4e8af1309e6f98ef95fa5074d:fac2dee73c5912077466719193ddf6dc$"
+}
+}

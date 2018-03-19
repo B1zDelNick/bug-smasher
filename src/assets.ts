@@ -51,10 +51,20 @@ export namespace Images {
 
         static getJPG(): string { return require('assets/images/bg_fail.jpg'); }
     }
+    export class ImagesBgLeaders {
+        static getName(): string { return 'bg_leaders'; }
+
+        static getJPG(): string { return require('assets/images/bg_leaders.jpg'); }
+    }
     export class ImagesBgMenu {
         static getName(): string { return 'bg_menu'; }
 
         static getJPG(): string { return require('assets/images/bg_menu.jpg'); }
+    }
+    export class ImagesBgShop {
+        static getName(): string { return 'bg_shop'; }
+
+        static getJPG(): string { return require('assets/images/bg_shop.jpg'); }
     }
     export class ImagesBgStart {
         static getName(): string { return 'bg_start'; }
@@ -98,12 +108,57 @@ export namespace Spritesheets {
 }
 
 export namespace Atlases {
+    enum AtlasesBossFrames {
+        Body = <any>'body.png',
+        Claws = <any>'claws.png',
+        Glass = <any>'glass.png',
+        LHand = <any>'l_hand.png',
+        LUs = <any>'l_us.png',
+        RHand = <any>'r_hand.png',
+        RUs = <any>'r_us.png',
+        Smoke = <any>'smoke.png',
+        Truba = <any>'truba.png',
+    }
+    export class AtlasesBoss {
+        static getName(): string { return 'boss'; }
+
+        static getJSONArray(): string { return require('assets/atlases/boss.json'); }
+
+        static getPNG(): string { return require('assets/atlases/boss.png'); }
+
+        static Frames = AtlasesBossFrames;
+    }
+    enum AtlasesBuyCoinsFrames {
+        Btn1 = <any>'btn_1.png',
+        Btn2 = <any>'btn_2.png',
+        Btn3 = <any>'btn_3.png',
+        Btn4 = <any>'btn_4.png',
+        Btn5 = <any>'btn_5.png',
+        Icon1 = <any>'icon_1.png',
+        Icon2 = <any>'icon_2.png',
+        Icon3 = <any>'icon_3.png',
+        Icon4 = <any>'icon_4.png',
+        Icon5 = <any>'icon_5.png',
+        Icon6 = <any>'icon_6.png',
+        InvBtn = <any>'inv_btn.png',
+        Paper = <any>'paper.png',
+    }
+    export class AtlasesBuyCoins {
+        static getName(): string { return 'buy_coins'; }
+
+        static getJSONArray(): string { return require('assets/atlases/buy_coins.json'); }
+
+        static getPNG(): string { return require('assets/atlases/buy_coins.png'); }
+
+        static Frames = AtlasesBuyCoinsFrames;
+    }
     enum AtlasesFoodFrames {
         Apple = <any>'apple.png',
         AppleG = <any>'apple_g.png',
         AppleR = <any>'apple_r.png',
         Burger = <any>'burger.png',
         BurgerG = <any>'burger_g.png',
+        BurgerR = <any>'burger_r.png',
         Cap = <any>'cap.png',
         CapG = <any>'cap_g.png',
         CapR = <any>'cap_r.png',
@@ -131,6 +186,9 @@ export namespace Atlases {
         CloseBtn = <any>'close_btn.png',
         GearBtn = <any>'gear_btn.png',
         HomeBtn = <any>'home_btn.png',
+        LeadersBtn = <any>'leaders_btn.png',
+        MusOffBtn = <any>'mus_off_btn.png',
+        MusOnBtn = <any>'mus_on_btn.png',
         NoBtn = <any>'no_btn.png',
         PauseBtn = <any>'pause_btn.png',
         PlayBtn = <any>'play_btn.png',
@@ -318,6 +376,52 @@ export namespace Atlases {
 
         static Frames = AtlasesPopupsFrames;
     }
+    enum AtlasesScrollerFrames {
+        Bar = <any>'bar.png',
+        Thumb = <any>'thumb.png',
+    }
+    export class AtlasesScroller {
+        static getName(): string { return 'scroller'; }
+
+        static getJSONArray(): string { return require('assets/atlases/scroller.json'); }
+
+        static getPNG(): string { return require('assets/atlases/scroller.png'); }
+
+        static Frames = AtlasesScrollerFrames;
+    }
+    enum AtlasesShopFrames {
+        Board = <any>'board.png',
+        ChalkPanelEn = <any>'chalk_panel_en.png',
+        ChalkPanelRu = <any>'chalk_panel_ru.png',
+        CostPanel = <any>'cost_panel.png',
+        DarkBot = <any>'dark_bot.png',
+        DarkMid = <any>'dark_mid.png',
+        DarkTop = <any>'dark_top.png',
+        Fg = <any>'fg.png',
+        FingerPanelEn = <any>'finger_panel_en.png',
+        FingerPanelRu = <any>'finger_panel_ru.png',
+        GetCoinBtnEn = <any>'get_coin_btn_en.png',
+        GetCoinBtnRu = <any>'get_coin_btn_ru.png',
+        GfingerPanelEn = <any>'gfinger_panel_en.png',
+        GfingerPanelRu = <any>'gfinger_panel_ru.png',
+        Lock = <any>'lock.png',
+        Nails = <any>'nails.png',
+        PoisonPanelEn = <any>'poison_panel_en.png',
+        PoisonPanelRu = <any>'poison_panel_ru.png',
+        SlipperPanelEn = <any>'slipper_panel_en.png',
+        SlipperPanelRu = <any>'slipper_panel_ru.png',
+        SprayPanelEn = <any>'spray_panel_en.png',
+        SprayPanelRu = <any>'spray_panel_ru.png',
+    }
+    export class AtlasesShop {
+        static getName(): string { return 'shop'; }
+
+        static getJSONArray(): string { return require('assets/atlases/shop.json'); }
+
+        static getPNG(): string { return require('assets/atlases/shop.png'); }
+
+        static Frames = AtlasesShopFrames;
+    }
     enum AtlasesStateFailFrames {
         Bug = <any>'bug.png',
         LabelEn = <any>'label_en.png',
@@ -331,6 +435,36 @@ export namespace Atlases {
         static getPNG(): string { return require('assets/atlases/state_fail.png'); }
 
         static Frames = AtlasesStateFailFrames;
+    }
+    enum AtlasesStateLeadersFrames {
+        AllBtnEn = <any>'all_btn_en.png',
+        AllBtnRu = <any>'all_btn_ru.png',
+        AllBtnSelEn = <any>'all_btn_sel_en.png',
+        AllBtnSelRu = <any>'all_btn_sel_ru.png',
+        Ava = <any>'ava.png',
+        Board = <any>'board.png',
+        Bug = <any>'bug.png',
+        Coins = <any>'coins.png',
+        First = <any>'first.png',
+        FrBtnEn = <any>'fr_btn_en.png',
+        FrBtnRu = <any>'fr_btn_ru.png',
+        FrBtnSelEn = <any>'fr_btn_sel_en.png',
+        FrBtnSelRu = <any>'fr_btn_sel_ru.png',
+        LabelEn = <any>'label_en.png',
+        LabelRu = <any>'label_ru.png',
+        Panel = <any>'panel.png',
+        ReturnBtn = <any>'return_btn.png',
+        Second = <any>'second.png',
+        Third = <any>'third.png',
+    }
+    export class AtlasesStateLeaders {
+        static getName(): string { return 'state_leaders'; }
+
+        static getJSONArray(): string { return require('assets/atlases/state_leaders.json'); }
+
+        static getPNG(): string { return require('assets/atlases/state_leaders.png'); }
+
+        static Frames = AtlasesStateLeadersFrames;
     }
     enum AtlasesStateLevelFrames {
         Coin = <any>'coin.png',
@@ -571,6 +705,7 @@ export namespace Atlases {
         static Frames = AtlasesWeaponGFingerFrames;
     }
     enum AtlasesWeaponGuiFrames {
+        Chalk = <any>'chalk.png',
         ChalkEn = <any>'chalk_en.png',
         ChalkRu = <any>'chalk_ru.png',
         FingerFemale = <any>'finger_female.png',
@@ -582,6 +717,7 @@ export namespace Atlases {
         N5 = <any>'n_5.png',
         N6 = <any>'n_6.png',
         Panel = <any>'panel.png',
+        Plus = <any>'plus.png',
         Poison = <any>'poison.png',
         SlipperEn = <any>'slipper_en.png',
         SlipperRu = <any>'slipper_ru.png',
@@ -645,7 +781,136 @@ export namespace Atlases {
 }
 
 export namespace Audio {
-    class IExistSoTypeScriptWillNotComplainAboutAnEmptyNamespace {}
+    export class AudioBossKilled {
+        static getName(): string { return 'boss_killed'; }
+
+        static getMP3(): string { return require('assets/audio/boss_killed.mp3'); }
+    }
+    export class AudioBossTheme {
+        static getName(): string { return 'boss_theme'; }
+
+        static getMP3(): string { return require('assets/audio/boss_theme.mp3'); }
+    }
+    export class AudioBtKilled {
+        static getName(): string { return 'bt_killed'; }
+
+        static getMP3(): string { return require('assets/audio/bt_killed.mp3'); }
+    }
+    export class AudioBugKilled {
+        static getName(): string { return 'bug_killed'; }
+
+        static getMP3(): string { return require('assets/audio/bug_killed.mp3'); }
+    }
+    export class AudioChalk {
+        static getName(): string { return 'chalk'; }
+
+        static getMP3(): string { return require('assets/audio/chalk.mp3'); }
+    }
+    export class AudioClick {
+        static getName(): string { return 'click'; }
+
+        static getMP3(): string { return require('assets/audio/click.mp3'); }
+    }
+    export class AudioCoins {
+        static getName(): string { return 'coins'; }
+
+        static getMP3(): string { return require('assets/audio/coins.mp3'); }
+    }
+    export class AudioEatFood {
+        static getName(): string { return 'eat_food'; }
+
+        static getMP3(): string { return require('assets/audio/eat_food.mp3'); }
+    }
+    export class AudioFing {
+        static getName(): string { return 'fing'; }
+
+        static getMP3(): string { return require('assets/audio/fing.mp3'); }
+    }
+    export class AudioGfing {
+        static getName(): string { return 'gfing'; }
+
+        static getMP3(): string { return require('assets/audio/gfing.mp3'); }
+    }
+    export class AudioLarvaKilled {
+        static getName(): string { return 'larva_killed'; }
+
+        static getMP3(): string { return require('assets/audio/larva_killed.mp3'); }
+    }
+    export class AudioLevel13Theme {
+        static getName(): string { return 'level_13_theme'; }
+
+        static getMP3(): string { return require('assets/audio/level_13_theme.mp3'); }
+    }
+    export class AudioLevel46Theme {
+        static getName(): string { return 'level_46_theme'; }
+
+        static getMP3(): string { return require('assets/audio/level_46_theme.mp3'); }
+    }
+    export class AudioLevel78Theme {
+        static getName(): string { return 'level_78_theme'; }
+
+        static getMP3(): string { return require('assets/audio/level_78_theme.mp3'); }
+    }
+    export class AudioLoose1 {
+        static getName(): string { return 'loose_1'; }
+
+        static getMP3(): string { return require('assets/audio/loose_1.mp3'); }
+    }
+    export class AudioLoose2 {
+        static getName(): string { return 'loose_2'; }
+
+        static getMP3(): string { return require('assets/audio/loose_2.mp3'); }
+    }
+    export class AudioMainTheme {
+        static getName(): string { return 'main_theme'; }
+
+        static getMP3(): string { return require('assets/audio/main_theme.mp3'); }
+    }
+    export class AudioNewWeapon {
+        static getName(): string { return 'new_weapon'; }
+
+        static getMP3(): string { return require('assets/audio/new_weapon.mp3'); }
+    }
+    export class AudioOuch {
+        static getName(): string { return 'ouch'; }
+
+        static getMP3(): string { return require('assets/audio/ouch.mp3'); }
+    }
+    export class AudioPause {
+        static getName(): string { return 'pause'; }
+
+        static getMP3(): string { return require('assets/audio/pause.mp3'); }
+    }
+    export class AudioPoison {
+        static getName(): string { return 'poison'; }
+
+        static getMP3(): string { return require('assets/audio/poison.mp3'); }
+    }
+    export class AudioSlipper {
+        static getName(): string { return 'slipper'; }
+
+        static getMP3(): string { return require('assets/audio/slipper.mp3'); }
+    }
+    export class AudioSpray {
+        static getName(): string { return 'spray'; }
+
+        static getMP3(): string { return require('assets/audio/spray.mp3'); }
+    }
+    export class AudioUnblock {
+        static getName(): string { return 'unblock'; }
+
+        static getMP3(): string { return require('assets/audio/unblock.mp3'); }
+    }
+    export class AudioWeb {
+        static getName(): string { return 'web'; }
+
+        static getMP3(): string { return require('assets/audio/web.mp3'); }
+    }
+    export class AudioWin {
+        static getName(): string { return 'win'; }
+
+        static getMP3(): string { return require('assets/audio/win.mp3'); }
+    }
 }
 
 export namespace Audiosprites {

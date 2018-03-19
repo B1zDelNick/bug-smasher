@@ -105,6 +105,7 @@ export class QuitWindow {
 		if (this.icon) this.icon.destroy(true);
 		if (this.panel) this.panel.destroy(true);
 		if (this.fader) this.fader.destroy(true);
-		if (this.container) this.container.destroy(true);
+        this.container.removeAll(true, true, true);
+        this.container.destroy(true);
 	}
 }

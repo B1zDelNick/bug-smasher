@@ -13,18 +13,18 @@ export class SoundUtils {
     private static currentTheme: string;
 
     public static init(mainTheme?: string): void {
+        this.currentTheme = 'MainTheme';
         this.onSwitchAudio = new Phaser.Signal();
         this.onSwitchSound = new Phaser.Signal();
 
         if (isNull(this.currentTheme) || isUndefined(this.currentTheme)) return;
 
-        /*this.currentTheme = GameConfig.GAME.sound.play(Assets.Audio.AudioMainTheme.getName();
+        // this.currentTheme = Assets.Audio.AudioMainTheme.getName();
         this.audios['MainTheme'] = GameConfig.GAME.sound.play(Assets.Audio.AudioMainTheme.getName(), 0.5, true);
-	    this.audios['ShopTheme'] = GameConfig.GAME.sound.add(Assets.Audio.AudioShopTheme.getName(), 0.5, true);
-	    this.audios['DietTheme'] = GameConfig.GAME.sound.add(Assets.Audio.AudioDietTheme.getName(), 0.5, true);
-	    this.audios['RivalsTheme'] = GameConfig.GAME.sound.add(Assets.Audio.AudioRivalsTheme.getName(), 0.5, true);
-	    this.audios['PhotoTheme'] = GameConfig.GAME.sound.add(Assets.Audio.AudioPhotoTheme.getName(), 0.5, true);
-	    this.audios['FlirtTheme'] = GameConfig.GAME.sound.add(Assets.Audio.AudioFlirtTheme.getName(), 0.5, true);*/
+	    this.audios['Level13Theme'] = GameConfig.GAME.sound.add(Assets.Audio.AudioLevel13Theme.getName(), 0.5, true);
+	    this.audios['Level46Theme'] = GameConfig.GAME.sound.add(Assets.Audio.AudioLevel46Theme.getName(), 0.5, true);
+	    this.audios['Level78Theme'] = GameConfig.GAME.sound.add(Assets.Audio.AudioLevel78Theme.getName(), 0.5, true);
+	    this.audios['BossTheme'] = GameConfig.GAME.sound.add(Assets.Audio.AudioBossTheme.getName(), 0.5, true);
     }
 
 	public static soundSwitch(): void {
@@ -56,15 +56,16 @@ export class SoundUtils {
 
     public static play(name: string): void {
         if (SoundUtils.currentTheme === name) return;
-        (SoundUtils.audios[SoundUtils.currentTheme] as Phaser.Sound).stop();
+        if (SoundUtils.audios[SoundUtils.currentTheme] !== null)
+            (SoundUtils.audios[SoundUtils.currentTheme] as Phaser.Sound).stop();
         SoundUtils.currentTheme = name;
         (SoundUtils.audios[SoundUtils.currentTheme] as Phaser.Sound).volume = SoundUtils.globalMusicEnabled ? .5 : 0;
         (SoundUtils.audios[SoundUtils.currentTheme] as Phaser.Sound).play();
     }
 
 	public static playFX(name: string): void {
-        /*if (SoundUtils.isMusicEnabled())
-		    GameConfig.GAME.sound.play(Assets.Audio['Audio' + name].getName());*/
+        if (SoundUtils.isSoundEnabled())
+		    GameConfig.GAME.sound.play(Assets.Audio['Audio' + name].getName());
 	}
 
     public static isSoundEnabled(): boolean {

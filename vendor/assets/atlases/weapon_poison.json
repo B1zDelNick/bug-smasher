@@ -1,0 +1,39 @@
+{"frames": [
+
+{
+	"filename": "base.png",
+	"frame": {"x":0,"y":0,"w":316,"h":267},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":316,"h":267},
+	"sourceSize": {"w":316,"h":267},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "drop.png",
+	"frame": {"x":316,"y":0,"w":87,"h":96},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":87,"h":96},
+	"sourceSize": {"w":87,"h":96},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "web.png",
+	"frame": {"x":403,"y":0,"w":316,"h":267},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":316,"h":267},
+	"sourceSize": {"w":316,"h":267},
+	"pivot": {"x":0.5,"y":0.5}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "weapon_poison.png",
+	"format": "RGBA8888",
+	"size": {"w":719,"h":267},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:d15192ab543f7e86aeb3f0b03b346e0b:c17a47218305584045a2e8d32d23d95e:a4d267afa3432df879fb5248a321ea0e$"
+}
+}

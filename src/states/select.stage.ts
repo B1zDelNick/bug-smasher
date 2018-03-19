@@ -6,10 +6,13 @@ import {InstantGui} from './gui/instant.gui';
 import {GuiButtons} from './gui/enum.gui';
 import {EffectUtils} from '../utils/effect.utils';
 import {GuiUtils} from '../utils/gui.utils';
+import {UnblockWindow} from '../utils/viral/unblock.window';
+import {ViralUtils} from '../utils/viral/viral.utils';
+import {SoundUtils} from '../utils/sound/sound.utils';
 
 export default class SelectStage extends Phaser.State {
 
-    private NEXT = 'Select';
+    private NEXT = 'Level';
     private nextPrepared = false;
 
     private gui: InstantGui = null;
@@ -42,11 +45,15 @@ export default class SelectStage extends Phaser.State {
     private unlock7: Phaser.Button = null;
     private unlock8: Phaser.Button = null;
 
+    private unblockWin: UnblockWindow = null;
+
     private spinner: Phaser.Sprite = null;
     private blocker: Phaser.Graphics = null;
 
     public init(...args: any[]): void {
         this.gui = new InstantGui(this);
+        this.NEXT = 'Level';
+        SoundUtils.play('MainTheme');
     }
 
     public preload(): void {
@@ -141,49 +148,49 @@ export default class SelectStage extends Phaser.State {
             ImageUtils.getAtlasClass('AtlasesStateSelectStage').getName(),
             ImageUtils.getAtlasClass('AtlasesStateSelectStage').Frames.Cup1,
             true, true, true,
-            null
+            this.preNext
         );
         this.btn2 = GuiUtils.makeButton(this, this.container, 323, 151, 1, 'btn2',
             ImageUtils.getAtlasClass('AtlasesStateSelectStage').getName(),
             ImageUtils.getAtlasClass('AtlasesStateSelectStage').Frames.Cup2,
-            true, true, true,
-            null
+            GameConfig.PLAYER_DATA.isStageUnlocked(GameConfig.SELECTED_LVL, 2), true, GameConfig.PLAYER_DATA.isStageUnlocked(GameConfig.SELECTED_LVL, 2),
+            this.preNext
         );
         this.btn3 = GuiUtils.makeButton(this, this.container, 21, 242, 1, 'btn3',
             ImageUtils.getAtlasClass('AtlasesStateSelectStage').getName(),
             ImageUtils.getAtlasClass('AtlasesStateSelectStage').Frames.Cup3,
-            true, true, true,
-            null
+            GameConfig.PLAYER_DATA.isStageUnlocked(GameConfig.SELECTED_LVL, 3), true, GameConfig.PLAYER_DATA.isStageUnlocked(GameConfig.SELECTED_LVL, 3),
+            this.preNext
         );
         this.btn4 = GuiUtils.makeButton(this, this.container, 244, 344, 1, 'btn4',
             ImageUtils.getAtlasClass('AtlasesStateSelectStage').getName(),
             ImageUtils.getAtlasClass('AtlasesStateSelectStage').Frames.Cup4,
-            true, true, true,
-            null
+            GameConfig.PLAYER_DATA.isStageUnlocked(GameConfig.SELECTED_LVL, 4), true, GameConfig.PLAYER_DATA.isStageUnlocked(GameConfig.SELECTED_LVL, 4),
+            this.preNext
         );
         this.btn5 = GuiUtils.makeButton(this, this.container, 72, 453, 1, 'btn5',
             ImageUtils.getAtlasClass('AtlasesStateSelectStage').getName(),
             ImageUtils.getAtlasClass('AtlasesStateSelectStage').Frames.Cup5,
-            true, true, true,
-            null
+            GameConfig.PLAYER_DATA.isStageUnlocked(GameConfig.SELECTED_LVL, 5), true, GameConfig.PLAYER_DATA.isStageUnlocked(GameConfig.SELECTED_LVL, 5),
+            this.preNext
         );
         this.btn6 = GuiUtils.makeButton(this, this.container, 329, 532, 1, 'btn6',
             ImageUtils.getAtlasClass('AtlasesStateSelectStage').getName(),
             ImageUtils.getAtlasClass('AtlasesStateSelectStage').Frames.Cup6,
-            true, true, true,
-            null
+            GameConfig.PLAYER_DATA.isStageUnlocked(GameConfig.SELECTED_LVL, 6), true, GameConfig.PLAYER_DATA.isStageUnlocked(GameConfig.SELECTED_LVL, 6),
+            this.preNext
         );
         this.btn7 = GuiUtils.makeButton(this, this.container, 60, 676, 1, 'btn7',
             ImageUtils.getAtlasClass('AtlasesStateSelectStage').getName(),
             ImageUtils.getAtlasClass('AtlasesStateSelectStage').Frames.Cup7,
-            true, true, true,
-            null
+            GameConfig.PLAYER_DATA.isStageUnlocked(GameConfig.SELECTED_LVL, 7), true, GameConfig.PLAYER_DATA.isStageUnlocked(GameConfig.SELECTED_LVL, 7),
+            this.preNext
         );
         this.btn8 = GuiUtils.makeButton(this, this.container, 298, 751, 1, 'btn8',
             ImageUtils.getAtlasClass('AtlasesStateSelectStage').getName(),
             ImageUtils.getAtlasClass('AtlasesStateSelectStage').Frames.Cup8,
-            true, true, true,
-            null
+            GameConfig.PLAYER_DATA.isStageUnlocked(GameConfig.SELECTED_LVL, 8), true, GameConfig.PLAYER_DATA.isStageUnlocked(GameConfig.SELECTED_LVL, 8),
+            this.preNext
         );
 
         this.title = this.game.add.sprite(65, 13,
@@ -192,13 +199,39 @@ export default class SelectStage extends Phaser.State {
             this.container
         );
 
+        this.ln1.visible = GameConfig.PLAYER_DATA.isStageUnlocked(GameConfig.SELECTED_LVL, 2);
+        this.ln2.visible = GameConfig.PLAYER_DATA.isStageUnlocked(GameConfig.SELECTED_LVL, 3);
+        this.ln3.visible = GameConfig.PLAYER_DATA.isStageUnlocked(GameConfig.SELECTED_LVL, 4);
+        this.ln4.visible = GameConfig.PLAYER_DATA.isStageUnlocked(GameConfig.SELECTED_LVL, 5);
+        this.ln5.visible = GameConfig.PLAYER_DATA.isStageUnlocked(GameConfig.SELECTED_LVL, 6);
+        this.ln6.visible = GameConfig.PLAYER_DATA.isStageUnlocked(GameConfig.SELECTED_LVL, 7);
+        this.ln7.visible = GameConfig.PLAYER_DATA.isStageUnlocked(GameConfig.SELECTED_LVL, 8);
+
         // GUI Buttons
         this.gui.addGui();
-        this.gui.addHomeBtn(null);
+        this.gui.addHomeBtn(() => {
+            this.NEXT = 'SelectLevel';
+            this.nextState();
+        });
+        this.gui.addLeadersBtn(() => {
+            this.NEXT = 'Leaders';
+            this.nextState();
+        });
+        this.gui.addShopBtn(() => {
+            this.NEXT = 'Shop';
+            this.nextState();
+        });
 
         const playBtn = this.gui.addPlayBtn(GuiButtons.START, this.nextState, 130, 738);
         playBtn.alpha = 0;
         playBtn.scale.setTo(0);
+
+        this.unblockWin = ViralUtils.addUnblockWindow();
+        this.unblockWin.setListeners(() => {
+            GameConfig.PLAYER_DATA.addCoins(-2500);
+        }, () => {
+            //
+        }, this);
 
         // Animations goes here
 	    this.game.camera.flash(0x000000, 1000);
@@ -211,6 +244,12 @@ export default class SelectStage extends Phaser.State {
             // PreloaderUtils.preloadComixState();
             AssetUtils.Loader.loadSelectedAssets(this.game, true, this.waitForLoading, this);
         }
+    }
+
+    private preNext(sprite: Phaser.Button) {
+        // disable all btns !!
+        GameConfig.SELECTED_STAGE = parseInt(sprite.name.substr(3));
+        this.nextState();
     }
 
     public update(): void {
@@ -228,6 +267,22 @@ export default class SelectStage extends Phaser.State {
         if (this.ln5) this.ln5.destroy(true);
         if (this.ln6) this.ln6.destroy(true);
         if (this.ln7) this.ln7.destroy(true);
+        if (this.btn1) this.btn1.destroy(true);
+        if (this.btn2) this.btn2.destroy(true);
+        if (this.btn3) this.btn3.destroy(true);
+        if (this.btn4) this.btn4.destroy(true);
+        if (this.btn5) this.btn5.destroy(true);
+        if (this.btn6) this.btn6.destroy(true);
+        if (this.btn7) this.btn7.destroy(true);
+        if (this.btn8) this.btn8.destroy(true);
+        if (this.unlock2) this.unlock2.destroy(true);
+        if (this.unlock3) this.unlock3.destroy(true);
+        if (this.unlock4) this.unlock4.destroy(true);
+        if (this.unlock5) this.unlock5.destroy(true);
+        if (this.unlock6) this.unlock6.destroy(true);
+        if (this.unlock7) this.unlock7.destroy(true);
+        if (this.unlock8) this.unlock8.destroy(true);
+        if (this.container) this.container.destroy(true);
         if (this.spinner) this.spinner.destroy(true);
         if (this.blocker) this.blocker.destroy(true);
         this.gui.dispose();
@@ -256,7 +311,12 @@ export default class SelectStage extends Phaser.State {
 
     private reallyGoNextState(addLoader: boolean = false): void {
         if (this.nextPrepared) {
-            this.game.state.start(this.NEXT, false, false);
+            if ('Leaders' === this.NEXT)
+                this.game.state.start(this.NEXT, false, false, 'SelectStage');
+            else if ('Shop' === this.NEXT)
+                this.game.state.start(this.NEXT, false, false, 'SelectStage');
+            else
+                this.game.state.start(this.NEXT, false, false);
         } else {
             if (addLoader) {
                 this.spinner = this.game.add.sprite(
